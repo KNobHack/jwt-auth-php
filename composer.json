@@ -1,0 +1,15 @@
+{
+    "name": "knobhack/php-jwt",
+    "description": "JWT package for PHP",
+    "type": "library",
+    "require": {
+        "lcobucci/jwt": "^4.1"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Knobhack\\PHPJWT\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}
