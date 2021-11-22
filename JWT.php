@@ -124,7 +124,7 @@ class JWT
 	 *	]
 	 * @param array $claims
 	 */
-	public function forResponse(array $claims)
+	public function forResponse(array $claims, string $refresh_token = '')
 	{
 		$jwt_token  = $this->generate($claims, true);
 		$expires_in = $this->exp->getTimestamp() - $this->iat->getTimestamp();
@@ -133,7 +133,7 @@ class JWT
             "access_token"  => $jwt_token,
             "token_type"    => "Bearer",
             "expires_in"    => $expires_in,
-            "refresh_token" => "",
+            "refresh_token" => $refresh_token,
         ];
 	}
 
