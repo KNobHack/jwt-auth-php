@@ -21,13 +21,14 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         $this->app['auth']->viaRequest('api', function ($request) {
-
             $jwt = app(JWT::class)->verifyRequest($request, false);
 
             if ($jwt !== false) {
-                $this->app->request->jwt = $jwt;
                 return new GenericUser($jwt);
             }
         });
+
+        $jwt = app(JWT::class)->verifyRequest($this->app['request'], false);
+        $this->app['request']->jwt = $jwt;
     }
 }

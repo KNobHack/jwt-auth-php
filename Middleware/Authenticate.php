@@ -2,12 +2,8 @@
 
 namespace App\JWT\Middleware;
 
-use App\JWT\JWT;
 use Closure;
 use Illuminate\Contracts\Auth\Factory as Auth;
-use Lcobucci\JWT\Encoding\CannotDecodeContent;
-use Lcobucci\JWT\Token\InvalidTokenStructure;
-use Lcobucci\JWT\Validation\RequiredConstraintsViolated;
 
 class Authenticate
 {
@@ -36,9 +32,9 @@ class Authenticate
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next, $wajib = false)
+    public function handle($request, Closure $next, $guard = 'api')
     {
-        if ($this->auth->guard()->guest() && $wajib) {
+        if ($this->auth->guard($guard)->guest()) {
             return $this->responseGuest();
         }
 

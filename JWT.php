@@ -40,12 +40,13 @@ class JWT
 
 	protected array $config;
 
-	public function __construct() {
+	public function __construct()
+	{
 		$this->config = require(__DIR__ . '/config/jwt.php');
 
 		$this->private_key = InMemory::base64Encoded($this->config['private_key']);
 		// $this->public_key  = InMemory::base64Encoded$this->config['public_key']);
-		
+
 		$now       = new DateTimeImmutable();
 		$this->now = $now;
 		$this->iss = $this->config['iss'];
@@ -60,7 +61,7 @@ class JWT
 		$symmetric_algo  = "Lcobucci\JWT\Signer\Hmac\\" . $this->config['symmetric_algo'];
 		// $asymmetric_algo = "Signer\Rsa\{$this->config['asymmetric_algo']}";
 
-		foreach($this->config['accept'] as $accept){
+		foreach ($this->config['accept'] as $accept) {
 			if ($accept == 'symetric') {
 				$this->configuration = Configuration::forSymmetricSigner(
 					new $symmetric_algo(),
@@ -84,7 +85,7 @@ class JWT
 		$this->builder = $this->configuration->builder();
 		$this->builder
 			->issuedBy($this->iss)
-			->issuedAt($this->iat)
+			// ->issuedAt($this->iat)
 			->expiresAt($this->exp);
 	}
 
@@ -130,11 +131,11 @@ class JWT
 		$expires_in = $this->exp->getTimestamp() - $this->iat->getTimestamp();
 
 		return [
-            "access_token"  => $jwt_token,
-            "token_type"    => "Bearer",
-            "expires_in"    => $expires_in,
-            "refresh_token" => $refresh_token,
-        ];
+			"access_token"  => $jwt_token,
+			"token_type"    => "Bearer",
+			"expires_in"    => $expires_in,
+			"refresh_token" => $refresh_token,
+		];
 	}
 
 	/**
@@ -172,7 +173,7 @@ class JWT
 		$user = $this->token_unencrypted->claims()->all();
 
 		unset($user['iss']);
-		unset($user['iat']);
+		// unset($user['iat']);
 		unset($user['exp']);
 
 		return $user;
