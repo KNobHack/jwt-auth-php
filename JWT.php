@@ -188,7 +188,7 @@ class JWT
 	 * @throws UnsupportedHeaderFound — When parsed token has an unsupported header.
 	 * @throws RequiredConstraintsViolated
 	 */
-	public function verifyRequest(Request $request)
+	public function verifyRequest(Request $request, bool $throw = true)
 	{
 		$token = $request->bearerToken();
 
@@ -196,6 +196,13 @@ class JWT
 			return false;
 		}
 
-		return $this->verify($token);
+		try {
+			$result = $this->verify($token);
+		} catch (\Throwable $th) {
+			if (!$throw) return false;
+			throw $th;
+		}
+
+		return $result;
 	}
 }
