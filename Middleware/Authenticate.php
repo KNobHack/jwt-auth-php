@@ -20,7 +20,7 @@ class Authenticate
     {
 		try {
 			$jwt = app('App\JWT\JWT')->verifyRequest($request);
-		} catch (CannotDecodeContent | InvalidTokenStructure) {
+		} catch (CannotDecodeContent | InvalidTokenStructure $e) {
 
 			return response()->json(
                 ['error' => 'Token tidak valid.'],
