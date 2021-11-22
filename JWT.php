@@ -41,7 +41,7 @@ class JWT
 	protected array $config;
 
 	public function __construct() {
-		$this->config = require_once(__DIR__ . '/config/jwt.php');
+		$this->config = require(__DIR__ . '/config/jwt.php');
 
 		$this->private_key = InMemory::base64Encoded($this->config['private_key']);
 		// $this->public_key  = InMemory::base64Encoded$this->config['public_key']);
